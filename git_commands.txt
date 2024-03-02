@@ -1,0 +1,54 @@
+1. git init
+   - Initializes a new Git repository in the current directory.
+
+2. git clone <repository_url>
+   - Clones a repository from a specified URL to your local machine.
+
+3. git add <file_name>
+   - Adds changes in a specified file to the staging area in preparation for committing.
+
+4. git commit -m "Commit message"
+   - Records changes to the repository with a descriptive commit message.
+
+5. git push origin <branch_name>
+   - Pushes committed changes from your local repository to a remote repository, typically specified by "origin" and a branch name.
+
+6. git pull origin <branch_name>
+   - Fetches changes from a remote repository and integrates them into the current local branch.
+
+7. git status
+   - Displays the current state of the repository, including tracked/untracked files and changes not yet staged for commit.
+
+8. git branch <branch_name>
+   - Creates a new branch with the specified name.
+
+9. git checkout <branch_name>
+   - Switches to the specified branch, making it the active branch for future commits and operations.
+
+10. git merge <branch_name>
+    - Integrates changes from the specified branch into the current branch.
+
+11. git log
+    - Displays a chronological list of commits in the repository along with their commit messages and other details.
+
+12. git checkout -- <file_name>
+    - Discards changes in the working directory for the specified file, reverting it to the state in the last commit.
+
+13. git reset HEAD <file_name>
+    - Unstages changes for the specified file, removing them from the staging area while keeping the changes in the working directory.
+
+14. git reset --soft HEAD~1
+    - Undoes the last commit while keeping the changes staged, allowing for adjustment before committing again.
+
+15. git config --global user.name "Your Name"
+    - Sets the global username to be used for Git commits.
+
+16. git config --global user.email "your_email@example.com"
+    - Sets the global email address to be used for Git commits.
+
+17. git remote -v
+    - Lists all configured remote repositories along with their URLs.
+
+18. git remote rm <remote_name>
+    - Removes the specified remote repository from the list of configured remotes.
+
