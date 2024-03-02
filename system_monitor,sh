@@ -8,6 +8,9 @@ timestamp=$(date +"%Y-%m-%d %T")
 # Get CPU usage
 cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
 
+# Get CPU temperature (requires lm-sensors)
+cpu_temperature=$(sensors | grep "Package" | awk '{print $4}')
+
 # Get memory usage
 memory_usage=$(free | awk '/Mem/{printf "%.2f", $3/$2*100}')
 
@@ -17,19 +20,35 @@ disk_usage=$(df -h / | awk 'NR==2 {print $5}')
 # Get system load average
 load_average=$(uptime | awk -F'[a-z]:' '{print $2}')
 
+# Get network statistics
+network_stats=$(cat /proc/net/dev | awk 'NR>2 {print $1 ": " $2 " bytes received, " $10 " bytes transmitted"}')
+
+# Get top CPU-consuming processes
+top_processes=$(ps -eo pid,%cpu,comm --sort=-%cpu | head -n 6)
+
 # Print system information
 echo "Timestamp: $timestamp"
 echo "CPU Usage: $cpu_usage%"
+echo "CPU Temperature: $cpu_temperature"
 echo "Memory Usage: $memory_usage%"
 echo "Disk Usage: $disk_usage"
 echo "Load Average: $load_average"
+echo "Network Statistics:"
+echo "$network_stats"
+echo "Top CPU-consuming Processes:"
+echo "$top_processes"
 
 # Save system information to log file
 log_file="system_monitor.log"
 echo "Timestamp: $timestamp" >> "$log_file"
 echo "CPU Usage: $cpu_usage%" >> "$log_file"
+echo "CPU Temperature: $cpu_temperature" >> "$log_file"
 echo "Memory Usage: $memory_usage%" >> "$log_file"
 echo "Disk Usage: $disk_usage" >> "$log_file"
 echo "Load Average: $load_average" >> "$log_file"
+echo "Network Statistics:" >> "$log_file"
+echo "$network_stats" >> "$log_file"
+echo "Top CPU-consuming Processes:" >> "$log_file"
+echo "$top_processes" >> "$log_file"
 
 echo "System monitoring information has been logged to $log_file."
