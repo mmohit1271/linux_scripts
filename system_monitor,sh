@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# System monitoring script
+
+# Get current timestamp
+timestamp=$(date +"%Y-%m-%d %T")
+
+# Get CPU usage
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+
+# Get memory usage
+memory_usage=$(free | awk '/Mem/{printf "%.2f", $3/$2*100}')
+
+# Get disk usage
+disk_usage=$(df -h / | awk 'NR==2 {print $5}')
+
+# Get system load average
+load_average=$(uptime | awk -F'[a-z]:' '{print $2}')
+
+# Print system information
+echo "Timestamp: $timestamp"
+echo "CPU Usage: $cpu_usage%"
+echo "Memory Usage: $memory_usage%"
+echo "Disk Usage: $disk_usage"
+echo "Load Average: $load_average"
+
+# Save system information to log file
+log_file="system_monitor.log"
+echo "Timestamp: $timestamp" >> "$log_file"
+echo "CPU Usage: $cpu_usage%" >> "$log_file"
+echo "Memory Usage: $memory_usage%" >> "$log_file"
+echo "Disk Usage: $disk_usage" >> "$log_file"
+echo "Load Average: $load_average" >> "$log_file"
+
+echo "System monitoring information has been logged to $log_file."
